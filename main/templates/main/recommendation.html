@@ -1,0 +1,32 @@
+{% extends 'main/navbar.html' %}
+{% block title %} Recomendations {% endblock title %}
+
+
+{% block body %}
+
+
+<div class="container bg-dark py-3 mt-5">
+    <h1 class="text-center">Recommendations for you.!</h1>
+</div>
+</div>
+
+<div class="container col-md-10">
+    <div class="row py-2">
+        {% for movie, poster in movies_and_posters %}
+            <div class="card text-center col-sm-3 my-1">
+                <img class="card-img-top img-thumbnail" src="{{poster}}" alt="Movie Poster" >
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{movie.title}}</h5>
+                    <p class="card-text">{{movie.genres}}</p>
+                    <button type="button" class="btn btn-primary mt-auto">
+                    <a href="{% url 'details' movie.pk %}" class="text-white">More Info</a>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+  </div>
+</div>
+  
+
+
+{% endblock %}

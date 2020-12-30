@@ -1,0 +1,56 @@
+{% extends 'main/navbar.html' %}
+{% block title %}Register {% endblock title %}
+
+
+
+{% block body %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="container col-md-5 bg-dark mt-5">
+        <fieldset>
+            <legend> Register Here</legend>
+
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+
+            {% for field in form %}
+            <div class="form-group">
+                {{field.label_tag}}
+                {{ field }}
+
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{field.help_text}}</small>
+                {% endif %}
+
+                {% if form.errors %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+
+            <div>
+                <br>
+                <p>Already have an account?
+                    <a href="{% url 'log_in' %}"> Click here to login.</a>
+                </p>
+            </div>
+        </fieldset>
+    </div>
+
+</form>
+
+
+{% endblock %}
+
+
