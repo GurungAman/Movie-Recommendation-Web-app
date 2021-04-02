@@ -22,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 's8+2qxhgyqng@)(jtkt9$w50w+(f3(b_vis030ft5)%mbpw5oy'
-
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['recommender-web-app.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'RecommendationWebApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
+        'NAME': 'recommenderwebapp',
         'USER': 'aman',
         'PASSWORD': 'amangrg123',
         'HOST': '127.0.0.1',
@@ -133,7 +133,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIR = [ os.path.join(BASE_DIR, "/static")]
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = BASE_DIR / 'static'
 
 CACHES = {
     'default': {

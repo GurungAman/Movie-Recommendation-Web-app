@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 class Movie(models.Model):
     movieId = models.IntegerField(primary_key=True, unique=True)
     title = models.CharField(max_length=100)
-    genres = models.CharField(max_length=100)
     imdbId = models.CharField(default=None, max_length=9)
 
     def __str__(self):
