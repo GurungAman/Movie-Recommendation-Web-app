@@ -83,8 +83,8 @@ DATABASES = {
     }
 }
  
-import dj_databse_url
-db_from_env = dj_databse_url.config()
+import dj_database_url
+db_from_env = dj_database_url.config()
 DATABASES['default'].update()
 
 # DATABASES = {
