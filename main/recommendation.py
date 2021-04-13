@@ -13,11 +13,12 @@ def recommend(user):
     avg_rating['adj_movie_rating'] = avg_rating['rating_x'] - avg_rating['rating_y']
 
     table = pd.pivot_table(avg_rating, values='adj_movie_rating', index='user_id', columns='movie_id')
-    table = table.apply(lambda row: row.fillna(row.mean()), axis=1)
-
-    cosine = cosine_similarity(table)
+    # table = table.apply(lambda row: row.fillna(row.mean()), axis=1)
+    final_table = table.fillna(table.mean(axis=0))
+    
+    cosine = cosine_similarity(final_table)
     np.fill_diagonal(cosine, 0)
-    similar_users = pd.DataFrame(cosine, index=table.index, columns=table.index)
+    similar_users = pd.DataFrame(cosine, index=final_table.index, columns=final_table.index)
 
     n_neighbours = 30
 
@@ -42,8 +43,7 @@ def recommend(user):
     for i in range(len(users_and_movies.loc[user].dropna().index)):
         if users_and_movies.loc[user].dropna().index[i] in user_corr:
             watched_movies.append(users_and_movies.loc[user].dropna().index[i])
-        else:
-            pass
+
     user_corr = user_corr.drop(watched_movies)
 
     suggestions = []
