@@ -26,8 +26,8 @@ urlpatterns = [
     path('recommendations/', views.recommend_movies, name='recommend'),
     path('list/', views.movie_list, name='movie_list'),
     path('watch_list/', views.movies_rated_by_user, name='watch_list'),
-    path('movie/<int:pk>/delete', views.delete_rating, name='delete'),
     path('profile/', views.user_profile, name='profile'),
+    path('delete_rating/<int:pk>', views.delete_rating, name ="delete_rating")
 ]
 
 

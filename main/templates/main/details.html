@@ -1,21 +1,17 @@
-{% extends 'main/navbar.html' %}
-
-{% block title %} {{movies}} {% endblock title %}
-
-
-{% block body %}
+{% extends 'main/navbar.html' %} {% block title %} {{movies}} {% endblock title %} {% block body %}
 
 
 <div class="container bg-light py-5 px-4">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <img src="{{movie_details.Poster}}" class="mx-auto d-block border border-dark"
-                     style="width:350px; height:450px;">
+                <img src="{{movie_details.Poster}}" class="mx-auto d-block border border-dark" style="width:350px; height:450px;">
             </div>
             <div class="col-md-6 offset-md-2 pt-3">
                 <ul class="list-group">
-                    <li class="list-group-item"><h3>Title: {{movies.title}}</h3></li>
+                    <li class="list-group-item">
+                        <h3>Title: {{movies.title}}</h3>
+                    </li>
                     <li class="list-group-item"><strong>Genre:  {{movies.genres}} </strong></li>
                     <li class="list-group-item"><strong>Released Date: {{movie_details.Released}}</strong></li>
                     <li class="list-group-item"><strong>Runtime: {{movie_details.Runtime}}</strong></li>
@@ -47,22 +43,22 @@
                             <input type="hidden" name="rating" class="rating-value" value="{{old_rating}}">
                         </div>
                         <button type="submit" class="btn btn-primary rounded-pill">Submit</button>
-                        <a class="btn btn-primary rounded-pill" href="{% url 'delete' movies.pk %}">Delete Rating</a>
+                        <a class="btn btn-primary rounded-pill" href="{% url 'delete_rating' movies.pk %}">Delete Rating</a>
                     </form>
 
                 </div>
             </div>
         </div>
-        <div class ="row">
+        <div class="row">
             <div class="col-sm-2">
-                    <a href="https://www.imdb.com/title/{{movies.imdbId}}" target="_blank">
-                        <button type="submit" class="btn btn-primary btn-block">More Info</button>
-                    </a>
+                <a href="https://www.imdb.com/title/{{movies.imdbId}}" target="_blank">
+                    <button type="submit" class="btn btn-primary btn-block">More Info</button>
+                </a>
             </div>
             <div class="col-md-4">
-                    <a href="{% url 'movie_list' %}">
-                        <button type="submit" class="btn btn-primary btn-block">Go back to Movie list</button>
-                    </a>
+                <a href="{% url 'movie_list' %}">
+                    <button type="submit" class="btn btn-primary btn-block">Go back to Movie list</button>
+                </a>
             </div>
         </div>
     </div>
@@ -70,4 +66,3 @@
 
 
 {% endblock body %}
-

@@ -1,56 +1,20 @@
 # Movie-Recommendation-Web-app
-<p>A simple movie recommender web application built using Django framework.
-A hybrid collaborative filtering method is used to give recommendations.
-This algorithm first finds the similarity score between users. Based on this similarity score, it then picks out a set of similar users. And from these similar set of users, the movies that are the most similar to the user’s past likings are recommended.
-</p>
-<p>
-The dataset about about users,movies and ratings is collected from [Grouplens dataset.](https://grouplens.org/datasets/movielens/)
-</p>
-<h4>
-Technologes Used:
-<h4>
-<h5>
-Web technologies:
-</h5>
-<p>
-<ul>
-<li> HTML
-<li> CSS
-<li> Bootstrap
-<li> Python
-<li> JavaScript
-<li> jQuery
-</ul>
-</p>
 
+A simple movie recommendation web application built using Django framework.
 
-<h5>
-Python Libraries used:
-</h5>
-<p>
-<ul>
-<li> Django
-<li> Scikit-learn
-<li> numpy
-<li> Pandas
-<li> requests
-</ul>
-</p>
+Dataset used from [Grouplens dataset.](https://grouplens.org/datasets/movielens/)
 
-<h5>
-Database used:
-</h5>
-<p>
-<ul>
-<li>SQLite
-</ul>
-</p>
+Movie posters and its data from [omdb api](https://www.omdbapi.com/)
 
-<h5>
-API used:
-</h5>
-<p>
-<ul>
-<li>OMDB API
-</ul>
-</p>
+###Installation instructions:
+
+1. Install requirements:
+```pip install -r requirements.txt```
+
+2. Run: ```python manage.py runserver```
+
+### with Docker:
+
+- Run this command from root directory:
+```docker-compose up --build```
+- open ```localhost:8000``` on yur browser

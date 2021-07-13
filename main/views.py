@@ -6,12 +6,12 @@ from .models import Movie, UserRating
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.http import Http404
 from .recommendation import recommend  
 from django.contrib.auth.decorators import login_required
 import requests
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
+import pandas as pd
 
 
 def get_movie_details(imdbId):
@@ -195,11 +195,11 @@ def recommend_movies(request):
 	user 			= request.user.id
 	movies 			= [] 
 	poster_path 	= []
-	if len(UserRating.objects.filter(user_id=user)) < 12:
+	if UserRating.objects.filter(user_id=user).count() < 12:
 		messages.info(request, "Please rate at least 12 movies to get recommendations.!")
 		return redirect('movie_list')
-
-	recommendations = recommend(user)
+	
+	recommendations = recommend(user=6041)
 	for values in recommendations:
 		movie 		= Movie.objects.get(movieId=values)
 		imdbId 		= movie.imdbId
@@ -213,23 +213,17 @@ def recommend_movies(request):
 				context={"movies_and_posters": movies_and_posters})
 
 
+@login_required(login_url='log_in')
 def delete_rating(request, pk):
-	movie 	= Movie.objects.get(movieId=pk)
-	user 	= request.user.id
+	user = request.user.id
 	try:
-		if request.method == "POST":
-			rating = UserRating.objects.get(user_id=user, movie_id=pk)
-			rating.delete()
-			messages.success(request, "Rating successfully deleted.!")
-			return redirect(homepage)
+		rating = UserRating.objects.get(user_id=user, movie_id=pk)
+		rating.delete()
+		messages.success(request, "Rating successfully deleted.!")
+		return redirect("details", pk=pk)
 	except:
-		messages.info(request,"You have not rated this movie yet.")
-		return redirect(homepage)
-
-	return render(request,
-				template_name="main/delete_rating.html",
-				context={"movie": movie})
-
+		messages.info(request, "You have not rated this movie yet.")
+		return redirect("details", pk=pk)
 
 def log_out(request):
 	logout(request)
