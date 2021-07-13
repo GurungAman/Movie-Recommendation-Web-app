@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from main.models import  UserRating
+from main.models import Movie, UserRating
 
 
 def recommend(user):
@@ -13,22 +13,21 @@ def recommend(user):
     avg_rating['adj_movie_rating'] = avg_rating['rating_x'] - avg_rating['rating_y']
 
     table = pd.pivot_table(avg_rating, values='adj_movie_rating', index='user_id', columns='movie_id')
-    final_table = table.apply(lambda row: row.fillna(row.mean()), axis=1)
-    # final_table = table.fillna(table.mean(axis=0))
+    # table = table.apply(lambda row: row.fillna(row.mean()), axis=1)
+    final_table = table.fillna(table.mean(axis=0))
     
     cosine = cosine_similarity(final_table)
     np.fill_diagonal(cosine, 0)
     similar_users = pd.DataFrame(cosine, index=final_table.index, columns=final_table.index)
 
-    n_neighbours = 10
+    n_neighbours = 25
 
-    top_10_neighbours = similar_users.apply(lambda x: pd.Series(x.sort_values(ascending=False).iloc[:n_neighbours].index, index=['top{}'.format(i) for i in range(1, n_neighbours + 1)]), axis=1)
+    top_25_neighbours = similar_users.apply(lambda x: pd.Series(x.sort_values(ascending=False).iloc[:n_neighbours].index, index=['top{}'.format(i) for i in range(1, n_neighbours + 1)]), axis=1)
 
-    list_of_user_ids = pd.DataFrame(top_10_neighbours.loc[user].tolist(), columns=["user_id"])
-    list_of_user_ids.loc[10] = user
-    print(list_of_user_ids)
+    list_of_user_ids = pd.DataFrame(top_25_neighbours.loc[user].tolist(), columns=["user_id"])
+    list_of_user_ids.loc[25] = user
 
-    users_and_movies = pd.merge(pd.merge(list_of_user_ids, avg_rating, on='user_id'), movies, left_on='movie_id', right_on='movie_id')
+    users_and_movies = pd.merge(pd.merge(list_of_user_ids, avg_rating, on='user_id'), movies, left_on='movie_id', right_on='movieId')
     users_and_movies = users_and_movies.pivot_table(index='user_id', columns='movie_id', values='adj_movie_rating')
 
     correlation_matrix = users_and_movies.corr(method='pearson', min_periods=1)
@@ -52,4 +51,6 @@ def recommend(user):
         suggestions.append(i)
 
     return suggestions
+
+
 
