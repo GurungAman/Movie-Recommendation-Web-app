@@ -6,7 +6,7 @@ Dataset used from [Grouplens dataset.](https://grouplens.org/datasets/movielens/
 
 Movie posters and its data from [omdb api](https://www.omdbapi.com/)
 
-###Installation instructions:
+### Installation instructions:
 
 1. Install requirements:
 ```pip install -r requirements.txt```
